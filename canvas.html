@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html style="margin: 0">
+<body style="margin: 0">
+
+<!-- <div id="test" style="position:absolute; top: 200px; left: 250px; width: 10px; height:10px; background: pink"></div> -->
+<div id="parent" style="position:absolute; top: 100px; left: 300px; width: 100px; height:100px; background: black"></div>
+<div id="child" style="position:absolute; top: 400px; left: 600px; width: 100px; height:100px; background: purple"></div>
+<canvas id="myCanvas" width="1500px" height="1500px">
+Your browser does not support the canvas element.
+</canvas>
+
+<script>
+function draw() {
+    var parent = document.getElementById("parent");
+    var child = document.getElementById("child");
+    var canvas = document.getElementById("myCanvas");
+
+    var parent_x = parent.offsetLeft + parent.offsetWidth / 2
+    var parent_y = parent.offsetTop + parent.offsetHeight;
+
+    var parent_center_x = parent_x
+    var parent_center_y = parent.offsetTop + parent.offsetHeight / 2;
+
+    console.log('parent center', parent_center_x, parent_center_y)
+
+    console.log('parent', parent_x, parent_y)
+
+    var child_x = child.offsetLeft
+    var child_y = child.offsetTop + child.offsetHeight / 2;
+
+    var child_center_x = child.offsetLeft + child.offsetWidth / 2
+    var child_center_y = child_y
+
+    if (child_center_x < parent_center_x) {
+        child_x = child.offsetLeft + child.offsetWidth
+    }
+
+    if (child_center_y < parent_center_y) {
+        parent_y = parent.offsetTop
+    }
+
+    console.log('child center', child_center_x, child_center_y)
+
+    console.log('child', child_x, child_y)
+
+    var distance_x = (child_x - parent_x) / 2
+    var distance_y = (child_y - parent_y) / 2
+
+    var first_part_x = parent_x
+    var first_part_y = distance_y + parent_y;
+
+    var second_part_x = distance_x + parent_x;
+    var second_part_y = first_part_y
+
+    var third_part_x = second_part_x;
+    var third_part_y = distance_y + second_part_y
+
+    var fourth_part_x = distance_x + third_part_x;
+    var fourth_part_y = third_part_y
+
+
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.setLineDash([3, 5]);
+    ctx.moveTo(parent_x, parent_y);
+    console.log(parent_x, parent_y);
+
+    ctx.lineTo(first_part_x, first_part_y);
+    console.log(first_part_x, first_part_y);
+
+    ctx.lineTo(second_part_x, second_part_y);
+    console.log(second_part_x, second_part_y);
+
+    ctx.lineTo(third_part_x, third_part_y);
+    console.log(third_part_x, third_part_y);
+
+    ctx.lineTo(fourth_part_x, fourth_part_y);
+    console.log(fourth_part_x, fourth_part_y);
+
+    ctx.stroke();
+}
+
+draw()
+setInterval(draw, 1000)
+</script>
+
+</body>
+</html>
